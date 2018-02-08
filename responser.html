@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <input type="button" value="Response" onclick="response();"></input>
+    <div id="response"></div>asd
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('https://aqueous-earth-55922.herokuapp.com');
+        //var socket = io.connect('http://localhost:4200');
+        var key = 'fnbgql';
+        var domain = 'www.test.com';
+        function response() {
+            socket.emit('response', {
+                key: key,
+                domain: domain,
+                username: 'chris',
+                password: '123'
+            });
+        }
+        //connection and join logic
+        socket.on('connect', function (data) {
+            socket.emit('responserJoin', { key: key });
+        });
+        //reponse logic when called
+        socket.on(key, function (data) {
+            alert('Send Reponse');
+            console.log(data);
+            response();
+        });
+    </script>
+</body>
+</html>

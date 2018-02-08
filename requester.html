@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+</head>
+<body>
+    <input type="button" value="Request" onclick="request();"></input> 
+    <div id="response"></div>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:4200');
+        function request() {
+            var key = 'asdf';
+            var domain = 'www.test.com';
+            socket.emit('request', {
+                key: key,
+                domain: domain
+            });
+        }
+        socket.on('connect', function (data) {
+            request();
+        });
+        socket.on('response', function (data) {
+            console.log(data);
+        });
+    </script>
+</body>
+</html>
